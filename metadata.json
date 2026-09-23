@@ -1,0 +1,6 @@
+{
+  "name": "HAMRO LOCAL",
+  "description": "Nepal's All-in-One Local Marketplace for Buying, Selling, Renting, and Booking Services",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

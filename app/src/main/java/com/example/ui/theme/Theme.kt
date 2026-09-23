@@ -1,0 +1,81 @@
+package com.example.ui.theme
+
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+
+private val DarkColorScheme = darkColorScheme(
+    primary = HamroCrimsonLight,
+    onPrimary = Color.White,
+    primaryContainer = HamroCrimsonDark,
+    onPrimaryContainer = Color.White,
+    secondary = HamroGold,
+    onSecondary = SlateTextDark,
+    secondaryContainer = HamroNavy,
+    onSecondaryContainer = Color.White,
+    tertiary = NepalGreenLight,
+    background = DarkBackground,
+    surface = DarkSurface,
+    surfaceVariant = DarkSurfaceVariant,
+    onBackground = DarkTextPrimary,
+    onSurface = DarkTextPrimary,
+    onSurfaceVariant = DarkTextSecondary,
+    outline = SlateTextMedium
+)
+
+private val LightColorScheme = lightColorScheme(
+    primary = HamroCrimson,
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFFFFEBEE),
+    onPrimaryContainer = HamroCrimsonDark,
+    secondary = HamroNavy,
+    onSecondary = Color.White,
+    secondaryContainer = Color(0xFFE8EAF6),
+    onSecondaryContainer = HamroNavy,
+    tertiary = NepalGreen,
+    onTertiary = Color.White,
+    background = WarmBackground,
+    surface = WarmSurface,
+    surfaceVariant = WarmSurfaceVariant,
+    onBackground = SlateTextDark,
+    onSurface = SlateTextDark,
+    onSurfaceVariant = SlateTextMedium,
+    outline = BorderLight
+)
+
+@Composable
+fun HamroLocalTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false, // Use intentional cultural Nepali brand identity
+    content: @Composable () -> Unit
+) {
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
+}
+
+// Backward compatibility alias
+@Composable
+fun MyApplicationTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false,
+    content: @Composable () -> Unit
+) = HamroLocalTheme(darkTheme, dynamicColor, content)
